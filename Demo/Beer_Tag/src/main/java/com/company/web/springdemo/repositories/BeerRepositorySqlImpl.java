@@ -3,6 +3,7 @@ package com.company.web.springdemo.repositories;
 import com.company.web.springdemo.exceptions.EntityNotFoundException;
 import com.company.web.springdemo.models.Beer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,7 @@ public class BeerRepositorySqlImpl implements BeerRepository {
                 Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
                 Statement statement = connection.createStatement();
 
-                ResultSet resultSet = statement.executeQuery("select beer_id, name, abv from beers");
+                ResultSet resultSet = statement.executeQuery("select * from beers");
 
         ) {
             return getBeers(resultSet);
@@ -162,8 +163,8 @@ public class BeerRepositorySqlImpl implements BeerRepository {
                     beersData.getString("name"),
                     beersData.getDouble("abv")
             );
-//            beer.setStyle(styleRepository.get(beersData.getInt("style_id")));
-//            beer.setCreateBy(userRepository.getUsername(beersData.getString("username")));
+//            beer.setStyle(styleRepository.getName(beersData.getString("name")));
+//            beer.setCreateBy(userRepository.getById(beersData.getInt("user_id")));
             beers.add(beer);
         }
         return beers;
